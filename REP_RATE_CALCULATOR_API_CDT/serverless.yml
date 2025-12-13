@@ -27,3 +27,9 @@ functions:
 
 plugins:
   - serverless-dotenv-plugin
+  - serverless-python-requirements
+
+custom:
+  pythonRequirements:
+    dockerizePip: false
+    slim: true
