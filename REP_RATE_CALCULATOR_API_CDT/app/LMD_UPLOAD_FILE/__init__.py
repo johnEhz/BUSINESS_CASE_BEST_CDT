@@ -1,0 +1,1 @@
+# __init__.py para LMD_UPLOAD_FILE
