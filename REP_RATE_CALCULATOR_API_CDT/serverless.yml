@@ -1,0 +1,27 @@
+service: rep-rate-calculator-api
+
+provider:
+  name: aws
+  runtime: python3.12
+  stage: prod
+  region: us-east-1
+  environment:
+    DEFAULT_ENV: ${self:provider.stage}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:GetObject
+        - s3:PutObject
+      Resource: "${self:provider.stage}-${env:S3_BUCKET_NAME, 'cdt-quota-files'}/*"
+
+functions:
+  uploadFile:
+    handler: app/LMD_UPLOAD_FILE/handler.upload_file
+    events:
+      - http:
+          path: /upload-file
+          method: post
+
+plugins:
+  - serverless-python-requirements
+  - serverless-dotenv-plugin
