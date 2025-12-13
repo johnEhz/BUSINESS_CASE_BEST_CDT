@@ -24,10 +24,14 @@ functions:
       - http:
           path: /upload-file
           method: post
+    environment:
+      S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
+      MAX_FILE_SIZE_MB: ${env:MAX_FILE_SIZE_MB}
+      ALLOWED_FILE_EXTENSIONS: ${env:ALLOWED_FILE_EXTENSIONS}
+      CSV_DELIMITER: ${env:CSV_DELIMITER}
 
 plugins:
   - serverless-dotenv-plugin
-  - serverless-python-requirements
 
 custom:
   pythonRequirements:
