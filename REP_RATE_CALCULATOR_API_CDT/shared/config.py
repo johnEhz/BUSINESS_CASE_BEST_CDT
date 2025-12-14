@@ -6,10 +6,10 @@ class Config:
     ALLOWED_FILE_EXTENSIONS = os.environ.get('ALLOWED_FILE_EXTENSIONS', '.csv')
     CSV_DELIMITER = os.environ.get('CSV_DELIMITER', ';')
     DB_CONFIG = {
-        'host': os.environ.get('DB_HOST'),
-        'port': int(os.environ.get('DB_PORT')),
-        'database': os.environ.get('DB_NAME'),
-        'user': os.environ.get('DB_USERNAME'),
-        'password': os.environ.get('DB_PASSWORD'),
+        'host': os.environ.get('DB_HOST', 'localhost'),
+        'port': int(os.environ.get('DB_PORT', '3306')),
+        'database': os.environ.get('DB_NAME', 'db_rates'),
+        'user': os.environ.get('DB_USERNAME', 'root'),
+        'password': os.environ.get('DB_PASSWORD', ''),
     }
     FILE_REQUIRED_COLUMNS = ['consecutivo', 'banco', 'minplazo', 'maxplazo', 'minmonto', 'maxmonto', 'tasa', 'fecha']
