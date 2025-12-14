@@ -13,6 +13,8 @@ class S3Util:
             ContentType=content_type
         )
     
-    def download_file(self, s3_key):
+    def download_csv_file(self, s3_key):
         response = self.s3.get_object(Bucket=self.bucket_name, Key=s3_key)
-        return response['Body'].read()
+        file_content_bytes = response['Body'].read()
+        file_content_str = file_content_bytes.decode('utf-8')
+        return file_content_str
