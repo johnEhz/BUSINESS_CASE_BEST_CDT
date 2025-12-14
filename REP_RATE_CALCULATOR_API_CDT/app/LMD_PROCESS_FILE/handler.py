@@ -1,3 +1,4 @@
+"""Lambda processFile: dispara por evento S3 para validar y cargar tasas desde el CSV a la BD, actualizando estados del archivo."""
 import io
 import csv
 import json

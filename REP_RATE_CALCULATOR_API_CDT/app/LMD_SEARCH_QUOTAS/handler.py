@@ -1,3 +1,4 @@
+"""Lambda getBankQuotas: retorna las cuotas/tasas disponibles por banco para un monto y plazo específicos."""
 from shared.utils.proxy_util import ProxyUtil
 from shared.utils.financial_utils import FinancialUtil
 from shared.repository.rates_repo import RatesReporistory

@@ -1,3 +1,4 @@
+"""Lambda calculatePeriodRate: calcula la tasa vencida a partir de una tasa efectiva anual y frecuencia periódica."""
 from shared.utils.proxy_util import ProxyUtil
 from shared.utils.financial_utils import FinancialUtil
 from decimal import Decimal, getcontext

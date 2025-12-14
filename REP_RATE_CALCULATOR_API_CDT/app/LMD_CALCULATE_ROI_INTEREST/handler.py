@@ -1,3 +1,4 @@
+"""Lambda calculateRoiInterest: obtiene cuotas por banco y calcula ROI/interest para el monto y plazo dados."""
 from shared.utils.proxy_util import ProxyUtil
 from shared.utils.financial_utils import FinancialUtil
 from shared.repository.rates_repo import RatesReporistory
