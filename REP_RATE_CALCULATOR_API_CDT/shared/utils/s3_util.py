@@ -12,3 +12,7 @@ class S3Util:
             Body=file_content,
             ContentType=content_type
         )
+    
+    def download_file(self, s3_key):
+        response = self.s3.get_object(Bucket=self.bucket_name, Key=s3_key)
+        return response['Body'].read()
