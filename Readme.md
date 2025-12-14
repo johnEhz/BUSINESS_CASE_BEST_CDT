@@ -66,6 +66,12 @@ Despliegue
 serverless deploy --stage <stage> --force
 ```
 Usa variables del .env a traves de serverless-dotenv-plugin.
+Todo se provisiona con Serverless Framework (API Gateway, Lambdas, IAM y bucket S3 para los uploads). El bucket de S3 se crea por stage usando `S3_BUCKET_NAME`.
+
+Base de datos
+-------------
+- Motor: MySQL (deben configurar credenciales para conectarse, sin embargo, se adjunta un diagrama de su estructura.).
+- Este repositorio no incluye el DDL; incorpora tus scripts de creacion/migraciones (ej. docs/db/schema.sql) antes de desplegar para tener las tablas de rates y files.
 
 Endpoints y payloads
 --------------------
@@ -126,3 +132,7 @@ Notas rapidas
 -------------
 - Credenciales y conexion a BD se leen desde shared/config.py.
 - Los archivos CSV deben cumplir columnas en Config.FILE_REQUIRED_COLUMNS y delimitador CSV_DELIMITER.
+
+Diagrama arquitectura
+-------------
+![Diagrama arquitectura](docs/diagrams/business_case_arch.drawio.png)
