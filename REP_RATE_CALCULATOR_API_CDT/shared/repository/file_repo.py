@@ -79,27 +79,46 @@ class FileRepository:
             raise
 
     def update_dynamic_file_record_by_key(self, file_key: str, update_data: dict) -> int:
-        """Actualiza dinámicamente campos de un registro de archivo"""
         if not update_data:
             return 0
-
+        
         set_clauses = []
         values = []
 
         for key, value in update_data.items():
-            set_clauses.append(f"`{key}` = %s")
+            set_clauses.append(f"`{key}` = %s") 
             values.append(value)
 
         set_clause = ", ".join(set_clauses)
-        values.append(file_key)
-        query = f"UPDATE upload_file SET {set_clause} WHERE file_key = %s"
 
+        update_values = list(values)
+        update_values.append(file_key)
+
+        update_query = f"UPDATE upload_file SET {set_clause} WHERE file_key = %s"
+        
+        conn = None
         try:
             with get_db_connection() as conn:
                 with conn.cursor() as cursor:
-                    cursor.execute(query, tuple(values))
+                                            
+                    select_query = "SELECT id, file_name, file_key, status FROM upload_file WHERE file_key = %s"
+                    cursor.execute(select_query, (file_key,))
+                    result = cursor.fetchone()
+                    
+                    if not result:
+                        conn.rollback()
+                        raise ValueError(f"No se encontró el registro de archivo para la clave: {file_key}")
+
+                    cursor.execute(update_query, tuple(update_values))
                     conn.commit()
-                    return cursor.rowcount
+
+                    if result:
+                        return result
+                    else:
+                        raise RuntimeError("Actualización exitosa pero ID no recuperado.") 
+                        
         except Exception as err:
-            print(f"Error on repository (update_dynamic_file_record): {err}")
+            if conn:
+                conn.rollback()
+            print(f"Error en el repositorio (update_dynamic_file_record): {err}")
             raise
