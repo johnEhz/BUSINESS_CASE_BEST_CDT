@@ -7,6 +7,15 @@ provider:
   region: us-east-1
   environment:
     DEFAULT_ENV: ${self:provider.stage}
+    DB_HOST: ${env:DB_HOST}
+    DB_PORT: ${env:DB_PORT}
+    DB_USERNAME: ${env:DB_USERNAME}
+    DB_PASSWORD: ${env:DB_PASSWORD}
+    DB_NAME: ${env:DB_NAME}
+    S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
+    MAX_FILE_SIZE_MB: ${env:MAX_FILE_SIZE_MB}
+    ALLOWED_FILE_EXTENSIONS: ${env:ALLOWED_FILE_EXTENSIONS}
+    CSV_DELIMITER: ${env:CSV_DELIMITER}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -24,16 +33,22 @@ functions:
       - http:
           path: /upload-file
           method: post
-    environment:
-      S3_BUCKET_NAME: ${env:S3_BUCKET_NAME}
-      MAX_FILE_SIZE_MB: ${env:MAX_FILE_SIZE_MB}
-      ALLOWED_FILE_EXTENSIONS: ${env:ALLOWED_FILE_EXTENSIONS}
-      CSV_DELIMITER: ${env:CSV_DELIMITER}
+
+  processFile:
+    handler: app/LMD_PROCESS_FILE/handler.process_s3_event
+    events:
+      - s3:
+          bucket: ${env:S3_BUCKET_NAME}
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - prefix: uploads/
+            - suffix: .csv
 
 plugins:
   - serverless-dotenv-plugin
+  - serverless-python-requirements
 
 custom:
   pythonRequirements:
-    dockerizePip: false
     slim: true
