@@ -13,6 +13,8 @@ s3_util = S3Util(Config.S3_BUCKET_NAME)
 file_repo = FileRepository()
 
 def upload_file(event, context):
+    file_name = ""
+    record_id = None
     try:
         client_info = ProxyUtil.extract_client_info(event)
 
@@ -71,4 +73,9 @@ def upload_file(event, context):
             
         return ProxyUtil.create_response(400, {'error': 'No se encontró ningún archivo en la solicitud.', 'success': False})
     except Exception as e:
+        file_repo.update_dynamic_file_record_by_id(record_id, {
+            "file_name": filename,
+            "status": 2,
+            "error_detail": str(e)
+        })
         return ProxyUtil.create_response(500, {'error': str(e), 'success': False})
