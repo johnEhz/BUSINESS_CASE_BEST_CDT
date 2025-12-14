@@ -1,4 +1,15 @@
 import json
+from decimal import Decimal
+from datetime import date, datetime
+
+class DecimalEncoder(json.JSONEncoder):
+    """Custom JSON encoder for Decimal and date objects"""
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return float(obj)
+        if isinstance(obj, (date, datetime)):
+            return obj.isoformat()
+        return super(DecimalEncoder, self).default(obj)
 
 class ProxyUtil:
     @staticmethod
@@ -9,7 +20,7 @@ class ProxyUtil:
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
             },
-            'body': json.dumps(body)
+            'body': json.dumps(body, cls=DecimalEncoder)
         }
     
     def extract_client_info(event):
