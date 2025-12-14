@@ -36,6 +36,7 @@ functions:
 
   processFile:
     handler: app/LMD_PROCESS_FILE/handler.process_s3_event
+    timeout: 300
     events:
       - s3:
           bucket: ${env:S3_BUCKET_NAME}
@@ -44,6 +45,27 @@ functions:
           rules:
             - prefix: uploads/
             - suffix: .csv
+
+  calculatePeriodRate:
+    handler: app/LMD_CALCULATE_EXPIRED_PERIOD/handler.lambda_handler
+    events:
+      - http:
+          path: /calculate-period-rate
+          method: post
+
+  calculateRoiInterest:
+    handler: app/LMD_CALCULATE_ROI_INTEREST/handler.lambda_handler
+    events:
+      - http:
+          path: /calculate-roi-interest
+          method: post
+
+  getBankQuotas:
+    handler: app/LMD_SEARCH_QUOTAS/handler.lambda_handler
+    events:
+      - http:
+          path: /get-bank-quotas
+          method: post
 
 plugins:
   - serverless-dotenv-plugin
