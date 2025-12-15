@@ -1,0 +1,25 @@
+<div class="bg-white rounded-lg shadow-md p-6  h-full">
+    <h2 class="text-2xl font-semibold text-purple-600 mb-4">Cuotas por Banco</h2>
+    <form (ngSubmit)="getBankQuotas()" class="flex flex-col gap-4 align-bottom">
+        <div class="flex flex-col gap-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Monto</label>
+                <input
+                    class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    [(ngModel)]="quotasAmount" name="quotasAmount" type="number" placeholder="5000000" />
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Plazo (días)</label>
+                <input
+                    class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    [(ngModel)]="quotasTermDays" name="quotasTermDays" type="number" placeholder="90" />
+            </div>
+        </div>
+        <button type="submit" [disabled]="quotasLoading"
+            class="w-full bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 disabled:bg-gray-400 cursor-pointer">
+            {{ quotasLoading ? 'Consultando...' : 'Consultar' }}
+        </button>
+    </form>
+
+    <app-json-viewer [data]="quotasResults || apiError"></app-json-viewer>
+</div>
