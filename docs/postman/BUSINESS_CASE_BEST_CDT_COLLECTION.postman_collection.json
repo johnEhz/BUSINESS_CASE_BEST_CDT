@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "d999a231-eaa2-4150-b3dd-2ecf90987416",
+		"name": "BUSINESS_CASE_BEST_CDT_COLLECTION",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21162474"
+	},
+	"item": [
+		{
+			"name": "upload-file",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "filename",
+							"type": "file",
+							"src": "/C:/Users/johnh/Downloads/tasas caso DEVBACK.csv"
+						}
+					]
+				},
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/upload-file",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"upload-file"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculate-period-rate",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"annual_effective_rate\": 12,\r\n    \"period_frequency\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/calculate-period-rate",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"calculate-period-rate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "calculate-roi-interest",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": 500000777777777000,\r\n    \"term_in_days\": 360,\r\n    \"base_days_in_year\": 360 //parámetro opcional, por defecto toma una base de 365 días\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/calculate-roi-interest",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"calculate-roi-interest"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-bank-quotas",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\": \"20000000\",\r\n    \"term_in_days\": \"300\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/get-bank-quotas",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"get-bank-quotas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-file-upload-history",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/get-file-upload-history",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"get-file-upload-history"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-file-upload-history-detail",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod/get-file-upload-history-detail?id_file=34",
+					"protocol": "https",
+					"host": [
+						"h1rmyklr68",
+						"execute-api",
+						"us-east-1",
+						"amazonaws",
+						"com"
+					],
+					"path": [
+						"prod",
+						"get-file-upload-history-detail"
+					],
+					"query": [
+						{
+							"key": "id_file",
+							"value": "34"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
