@@ -1,0 +1,41 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <h1 class="text-4xl font-bold text-blue-600 mb-2">{{ title }}</h1>
+    <div class="flex flex-col gap-2">
+      <p class="text-gray-600">Calcula tasas, ROI e intereses prueba técnica para mejor CDT!</p>
+      <small class="text-gray-600">Desarrollado por {{ developer }} - CC: {{ cc }} - CEL: {{ cel }}</small>
+      <a class="hover:underline text-blue-600 " href="mailto:{{ mail }}">{{ mail }}</a>
+    </div>
+
+      <!-- Manual de uso -->
+    <section class="mt-6 bg-white rounded-lg shadow-sm border border-gray-200">
+      <div class="p-6">
+        <h2 class="text-2xl font-semibold text-gray-800 mb-3">Manual de uso</h2>
+        <ul class="list-disc list-inside text-gray-700 space-y-2">
+          <li><span class="font-medium">Cargar archivo CSV:</span> Usa la sección de Carga de archivos para seleccionar
+            y selecciona tu CSV, este no debe superar los 5MB antes de enviarlo (Se valida por backend y frontend). El
+            sistema validará el contenido y registrará el estado en el historial a medida que se procesa.</li>
+          <li><span class="font-medium">Calculadoras:</span> Utiliza las tarjetas para calcular ROI/intereses, tasa por
+            periodo y cuotas bancarias. Completa los campos requeridos y pulsa "Calcular" para ver el resultado.</li>
+          <li><span class="font-medium">Historial de cargas:</span> En "Historial de cargas" puedes ver las últimas 25 operaciones.
+            Usa "Recargar" para actualizar y el botón con ícono de ojo para ocultar/mostrar la tabla.</li>
+          <li><span class="font-medium">Alertas por archivo:</span> Si un registro tiene alertas, presiona "Ver" para
+            abrir el detalle. La modal mostrará columnas: Rate Consecutivo, Tipo de Alerta, Mensaje y Fecha/Hora.</li>
+          <li><span class="font-medium">Fechas y formatos:</span> Las fechas se muestran en formato local (es-CO). Si
+            ves errores, verifica el formato del CSV y vuelve a cargar.</li>
+        </ul>
+
+        <div class="mt-4 text-sm text-gray-600">
+          <p><span class="font-medium">Nota:</span> El sistema utilizará la información de tu último archivo cargado
+            válido, por lo tanto en caso de que cargues un archivo con errores, estos no afectarán los cálculos ni
+            resultados posteriormente.</p>
+        </div>
+      </div>
+    </section>
+    <!-- Rates Management Component -->
+    <div class="my-8">
+      <app-rates-management></app-rates-management>
+    </div>
+  </div>
+</div>
