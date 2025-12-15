@@ -33,6 +33,16 @@ functions:
       - http:
           path: /upload-file
           method: post
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
 
   processFile:
     handler: app/LMD_PROCESS_FILE/handler.process_s3_event
@@ -52,6 +62,16 @@ functions:
       - http:
           path: /calculate-period-rate
           method: post
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
 
   calculateRoiInterest:
     handler: app/LMD_CALCULATE_ROI_INTEREST/handler.lambda_handler
@@ -59,6 +79,16 @@ functions:
       - http:
           path: /calculate-roi-interest
           method: post
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
 
   getBankQuotas:
     handler: app/LMD_SEARCH_QUOTAS/handler.lambda_handler
@@ -66,6 +96,50 @@ functions:
       - http:
           path: /get-bank-quotas
           method: post
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+
+  getFileUploadHistory:
+    handler: app/LMD_FILE_UPLOAD_HISTORY/handler.lambda_handler
+    events:
+      - http:
+          path: /get-file-upload-history
+          method: get
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
+
+  getFileUploadHistoryDetail:
+    handler: app/LMD_FILE_UPLOAD_HISTORY_DETAIL/handler.lambda_handler
+    events:
+      - http:
+          path: /get-file-upload-history-detail
+          method: get
+          cors:
+            origin: "*"
+            headers:
+              - Content-Type
+              - Authorization
+              - X-Requested-With
+              - X-Amz-Date
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: false
 
 plugins:
   - serverless-dotenv-plugin
