@@ -1,0 +1,29 @@
+<div class="bg-white rounded-lg shadow-md p-6">
+    <h2 class="text-2xl font-semibold text-blue-600 mb-4">Calcular ROI</h2>
+    <form (ngSubmit)="calculateRoi()" class="space-y-4">
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Monto</label>
+            <input
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [(ngModel)]="roiAmount" name="roiAmount" type="number" placeholder="5000000" />
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Plazo (días)</label>
+            <input
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [(ngModel)]="roiTermDays" name="roiTermDays" type="number" placeholder="90" />
+        </div>
+        <div>
+            <label class="block text-sm font-medium text-gray-700">Base días/año</label>
+            <input
+                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                [(ngModel)]="roiBaseDays" name="roiBaseDays" type="number" placeholder="360" />
+        </div>
+        <button type="submit" [disabled]="roiLoading"
+            class="w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 cursor-pointer">
+            {{ roiLoading ? 'Calculando...' : 'Calcular' }}
+        </button>
+    </form>
+    <app-json-viewer [data]="roiResults"></app-json-viewer>
+
+</div>
