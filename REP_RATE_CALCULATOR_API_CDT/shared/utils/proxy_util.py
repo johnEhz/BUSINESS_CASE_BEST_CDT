@@ -18,7 +18,9 @@ class ProxyUtil:
             'statusCode': status_code,
             'headers': {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Headers': 'Content-Type,Authorization,X-Requested-With',
+                'Access-Control-Allow-Methods': 'OPTIONS,POST,GET'
             },
             'body': json.dumps(body, cls=DecimalEncoder)
         }
