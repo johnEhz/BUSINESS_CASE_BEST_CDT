@@ -31,7 +31,7 @@ export class ApiService {
         return this.http.post<any>(`${this.base}/calculate-period-rate`, body);
     }
 
-    getBankQuotas(body: { amount: string; term_in_days: string }): Observable<any> {
+    getBankQuotas(body: { amount: number; term_in_days: number }): Observable<any> {
         return this.http.post<any>(`${this.base}/get-bank-quotas`, body);
     }
 

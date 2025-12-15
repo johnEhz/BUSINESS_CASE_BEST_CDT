@@ -1,19 +1,25 @@
 <div class="bg-white rounded-lg shadow-md p-6 h-full">
     <h2 class="text-2xl font-semibold text-green-600 mb-4">Tasa Vencida</h2>
-    <form (ngSubmit)="calculatePeriodRate()" class="space-y-4">
+    <form [formGroup]="periodForm" (ngSubmit)="calculatePeriodRate()" class="space-y-4">
         <div>
             <label class="block text-sm font-medium text-gray-700">Tasa Efectiva Anual</label>
             <input
-                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                [(ngModel)]="periodRateAer" name="periodRateAer" type="number" step="0.01" placeholder="0.12" />
+                formControlName="periodRateAer"
+                class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2"
+                [ngClass]="periodForm.get('periodRateAer')?.invalid && periodForm.get('periodRateAer')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-green-500'"
+                type="number" step="0.01" placeholder="0.12" />
+            <p *ngIf="getFieldError('periodRateAer')" class="text-red-600 text-sm mt-1">{{ getFieldError('periodRateAer') }}</p>
         </div>
         <div>
             <label class="block text-sm font-medium text-gray-700">Frecuencia Periódica</label>
             <input
-                class="mt-1 w-full border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
-                [(ngModel)]="periodFrequency" name="periodFrequency" type="number" placeholder="12" />
+                formControlName="periodFrequency"
+                class="mt-1 w-full border rounded px-3 py-2 focus:outline-none focus:ring-2"
+                [ngClass]="periodForm.get('periodFrequency')?.invalid && periodForm.get('periodFrequency')?.touched ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-green-500'"
+                type="number" placeholder="12" />
+            <p *ngIf="getFieldError('periodFrequency')" class="text-red-600 text-sm mt-1">{{ getFieldError('periodFrequency') }}</p>
         </div>
-        <button type="submit" [disabled]="periodLoading"
+        <button type="submit" [disabled]="!periodForm.valid || periodLoading"
             class="w-full bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 disabled:bg-gray-400 cursor-pointer">
             {{ periodLoading ? 'Calculando...' : 'Calcular' }}
         </button>
