@@ -1,0 +1,60 @@
+<!-- Modal Overlay -->
+<div *ngIf="isOpen" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+    <!-- Modal Container -->
+    <div class="bg-white rounded-lg shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center p-6 border-b border-gray-200 sticky top-0 bg-white">
+            <h2 class="text-2xl font-semibold text-gray-800">Detalles de Alertas</h2>
+            <button (click)="closeModal()" class="text-gray-500 hover:text-gray-700 transition text-2xl font-light cursor-pointer">
+                ×
+            </button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="p-6">
+            <div *ngIf="alerts && alerts.length > 0" class="overflow-x-auto">
+                <table class="w-full border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100 border-b">
+                            <th class="text-left px-4 py-3 font-semibold text-gray-700">Consecutivo</th>
+                            <th class="text-left px-4 py-3 font-semibold text-gray-700">Tipo de Alerta</th>
+                            <th class="text-left px-4 py-3 font-semibold text-gray-700">Mensaje</th>
+                            <th class="text-left px-4 py-3 font-semibold text-gray-700">Fecha/Hora</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let alert of alerts" class="border-b hover:bg-gray-50 transition">
+                            <td class="px-4 py-3 text-gray-800 font-medium">
+                                {{ alert.rate_consecutive }}
+                            </td>
+                            <td class="px-4 py-3">
+                                <span
+                                    [ngClass]="'px-3 py-1 rounded text-xs font-medium inline-block ' + getAlertTypeColor(alert.id_alert_type)">
+                                    {{ getAlertTypeLabel(alert.id_alert_type) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 text-gray-700 text-sm">
+                                {{ alert.message }}
+                            </td>
+                            <td class="px-4 py-3 text-gray-600 text-sm">
+                                {{ formatDate(alert.created_at) }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div *ngIf="!alerts || alerts.length === 0" class="text-center py-8">
+                <p class="text-gray-500 text-lg">No hay alertas para este archivo.</p>
+            </div>
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="flex justify-end gap-3 p-6 border-t border-gray-200">
+            <button (click)="closeModal()"
+                class="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition font-medium cursor-pointer">
+                Cerrar
+            </button>
+        </div>
+    </div>
+</div>
