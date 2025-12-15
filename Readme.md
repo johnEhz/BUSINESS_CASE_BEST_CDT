@@ -136,3 +136,152 @@ Notas rapidas
 Diagrama arquitectura
 -------------
 ![Diagrama arquitectura](docs/diagrams/business_case_arch.drawio.png)
+
+---
+
+REP_RATE_CALCULATOR_CLIENT_CDT
+==============================
+
+Cliente web (frontend) desarrollado en Angular 18 con Tailwind CSS. Consume la API REST para realizar cálculos de tasas, ROI, cargas de archivos y gestión de historial.
+
+**URL de acceso (Producción):** https://prod.d3sk51crxgv08l.amplifyapp.com/
+
+Características
+---------------
+- **Componentes modulares standalone**: Calculadora de ROI, tasa por periodo, cuotas bancarias, carga de archivos.
+- **Tabla de historial dinámico**: Visualiza últimos registros de carga con estados y toggle de visibilidad.
+- **Modal de detalles**: Muestra alertas y validaciones de archivos cargados.
+- **JSON Viewer**: Copia y descarga respuestas de API en formato JSON.
+- **Estilos Tailwind CSS**: Responsive y moderno.
+- **Integración CORS**: Configurado para consumir API en prod.
+
+Estructura del cliente
+---------------------
+```
+src/
+├── app/
+│   ├── components/
+│   │   ├── roi-calculator/            # Cálculo de ROI por banco
+│   │   ├── expired-period-calculator/ # Tasa por periodo
+│   │   ├── bank-quotas-form/          # Cuotas bancarias
+│   │   ├── file-upload/               # Carga de CSV
+│   │   ├── rates-history/             # Tabla de historial
+│   │   ├── rates-history-detail/      # Modal de alertas
+│   │   └── json-viewer/               # Visualizador JSON
+│   ├── services/
+│   │   └── api.service.ts             # Llamadas a API REST
+│   ├── environments/
+│   │   ├── environment.ts             # Desarrollo
+│   │   └── environment.prod.ts        # Producción
+│   └── app.html / app.ts              # Componente raíz
+├── assets/
+└── styles/
+    └── styles.css                      # Tailwind + custom
+```
+
+Requisitos previos (Cliente)
+----------------------------
+- Node.js 18+ y npm
+- Angular CLI: `npm i -g @angular/cli`
+
+Instalación (PowerShell)
+------------------------
+```powershell
+cd REP_RATE_CALCULATOR_CLIENT_CDT
+npm install
+```
+
+Variables de entorno (Cliente)
+-----------------------------
+Edita `src/environments/environment.ts` (dev) y `environment.prod.ts` (prod):
+```typescript
+export const environment = {
+  apiBaseUrl: 'https://h1rmyklr68.execute-api.us-east-1.amazonaws.com/prod'
+};
+```
+
+Desarrollo local (Cliente)
+--------------------------
+```powershell
+ng serve --open
+# App corre en http://localhost:4200
+```
+
+Build para producción (Cliente)
+-------------------------------
+```powershell
+npm run build -- -c production
+# Output: dist/REP_RATE_CALCULATOR_CLIENT_CDT/
+```
+
+Componentes principales (Cliente)
+---------------------------------
+
+### ROI Calculator
+Calcula retorno de inversión ingresando monto, plazo y tasa base anual. Devuelve ROI por banco.
+
+### Expired Period Calculator
+Convierte tasa efectiva anual a tasa vencida por periodo (mensual, trimestral, etc.).
+
+### Bank Quotas Form
+Calcula cuotas de CDT por banco para un monto y plazo dados.
+
+### File Upload
+Sube archivos CSV (.csv máx. 5MB) con tasas. Valida formato y registra carga en BD.
+
+### Rates History
+Tabla con últimas cargas: ID, archivo, estado, errores, fecha, IP, alertas. Con botón para ocultar/mostrar tabla y recargar datos.
+
+### Rates History Detail (Modal)
+Muestra detalles de alertas para un archivo: rate consecutivo, tipo alerta, mensaje, fecha.
+
+### JSON Viewer
+Componente reutilizable para mostrar respuestas JSON con botones copiar y descargar.
+
+Servicios (Cliente)
+-------------------
+**api.service.ts**: Centraliza llamadas HTTP a la API.
+- `getUploadHistory()`: Obtiene últimas cargas.
+- `calculateRoiInterest()`: POST /calculate-roi-interest.
+- `calculatePeriodRate()`: POST /calculate-period-rate.
+- `getBankQuotas()`: POST /get-bank-quotas.
+- `uploadFile()`: POST /upload-file (multipart).
+
+Despliegue en AWS Amplify (Cliente)
+-----------------------------------
+
+### Opción 1: Amplify CLI
+```powershell
+npm install -g @aws-amplify/cli
+amplify init
+amplify add hosting
+# Selecciona "Hosting with Amplify Console" > "Manual deployment"
+amplify publish
+```
+
+### Opción 2: Amplify Console (manual)
+1. Ve a [AWS Amplify Console](https://console.aws.amazon.com/amplify/).
+2. Clic en **Create app** → **Deploy without Git**.
+3. Sube el contenido de `dist/REP_RATE_CALCULATOR_CLIENT_CDT/`.
+4. Amplify provisiona hosting y proporciona URL pública.
+
+### Configurar rewrites para SPA
+Después de subir, en Amplify Console:
+1. App settings → **Rewrites and redirects**.
+2. Agrega: Source `</^((?!\\.).)*$/>` → Target `/index.html` (Type: 200 Rewrite).
+3. Guarda y espera ~1 minuto.
+
+Manual de usuario (Cliente)
+---------------------------
+1. **Cargar archivo**: Sección "Cargar archivo" → selecciona CSV y envía.
+2. **Calculadoras**: Completa campos en tarjetas y pulsa "Calcular".
+3. **Historial**: En "Historial de cargas", ve últimas operaciones y usa ojo para ocultar/mostrar tabla.
+4. **Alertas**: Si hay advertencias, presiona "Ver" en la tabla para abrir modal con detalles.
+5. **JSON**: Las respuestas de API se pueden copiar o descargar con el viewer.
+
+Herramientas y librerías (Cliente)
+----------------------------------
+- **Angular 18**: Framework SPA.
+- **Tailwind CSS**: Estilos responsive.
+- **RxJS**: Manejo de Observables para HTTP.
+- **HttpClient**: Consumo de API REST con CORS.
