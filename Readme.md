@@ -82,6 +82,8 @@ Endpoints y payloads
 - POST /calculate-roi-interest → { "amount": "5000000", "term_in_days": "90", "base_days_in_year": 360 } devuelve ROI calculado por banco.
 - POST /get-bank-quotas → { "amount": "5000000", "term_in_days": "90" } devuelve cuotas por banco para el rango.
 
+**Postman Collection:** Importa la colección completa desde [docs/postman/BUSINESS_CASE_BEST_CDT_COLLECTION.postman_collection.json](docs/postman/BUSINESS_CASE_BEST_CDT_COLLECTION.postman_collection.json) para probar todos los endpoints.
+
 Ejemplos de consumo (cURL)
 --------------------------
 - Subir CSV
