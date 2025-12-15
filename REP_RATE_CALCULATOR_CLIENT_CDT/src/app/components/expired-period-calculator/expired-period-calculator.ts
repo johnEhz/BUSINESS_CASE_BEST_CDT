@@ -15,9 +15,11 @@ export class ExpiredPeriodCalculator {
   periodFrequency = 12;
   periodResults: any = null;
   periodLoading = false;
+  expiredPeriodError: string | null = null;
   constructor(private api: ApiService) { }
 
   calculatePeriodRate() {
+    this.expiredPeriodError = null;
     this.periodLoading = true;
     this.api.calculatePeriodRate({
       annual_effective_rate: this.periodRateAer,
@@ -26,8 +28,9 @@ export class ExpiredPeriodCalculator {
       next: (result: any) => {
         this.periodResults = result;
       },
-      error: (err: unknown) => {
-        console.error(err);
+      error: (err: any) => {
+        this.expiredPeriodError = String(err.error.error);
+        this.periodLoading = false;
       },
       complete: () => {
         this.periodLoading = false;

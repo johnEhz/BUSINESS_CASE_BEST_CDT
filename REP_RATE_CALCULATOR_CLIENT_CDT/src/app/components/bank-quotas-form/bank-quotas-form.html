@@ -21,5 +21,6 @@
         </button>
     </form>
 
-    <app-json-viewer [data]="quotasResults || apiError"></app-json-viewer>
+    <app-json-viewer [data]="quotasResults"></app-json-viewer>
+    <div *ngIf="investedSummaryError" class="text-red-600 mt-2">{{ investedSummaryError }}</div>
 </div>

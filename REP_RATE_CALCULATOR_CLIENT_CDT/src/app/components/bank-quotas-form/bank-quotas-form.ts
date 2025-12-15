@@ -16,11 +16,12 @@ export class BankQuotasForm {
   quotasResults: any[] = [];
   quotasTermDays = '90';
   investmentSummary: any = null;
-  apiError: string | null = null;
+  investedSummaryError: string | null = null;
 
   constructor(private api: ApiService) { }
 
   getBankQuotas() {
+    this.investedSummaryError = null;
     this.quotasLoading = true;
     this.api.getBankQuotas({
       amount: this.quotasAmount,
@@ -29,8 +30,9 @@ export class BankQuotasForm {
       next: (result: any) => {
         this.quotasResults = result;
       },
-      error: (err: unknown) => {
-        this.apiError = String(err);
+      error: (err: any) => {
+        this.investedSummaryError = String(err.error.error);
+        this.quotasLoading = false;
       },
       complete: () => {
         this.quotasLoading = false;

@@ -17,9 +17,11 @@ export class RoiCalculator {
   roiBaseDays = 360;
   roiResults: RoiInterestCalculationResponse | null = null;
   roiLoading = false;
+  roiLoadingError: string | null = null;
   constructor(private api: ApiService) { }
 
   calculateRoi() {
+    this.roiLoadingError = null;
     this.roiLoading = true;
     this.api.calculateRoiInterest({
       amount: this.roiAmount,
@@ -29,8 +31,9 @@ export class RoiCalculator {
       next: (result: RoiInterestCalculationResponse) => {
         this.roiResults = result;
       },
-      error: (err: unknown) => {
-        console.error(err);
+      error: (err: any) => {
+        this.roiLoadingError = String(err.error.error);
+        this.roiLoading = false;
       },
       complete: () => {
         this.roiLoading = false;
